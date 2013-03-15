@@ -184,8 +184,9 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 // does not match boot count.
                 return false;
             }
-
-            return EngineGroup.IsInTime(parameters.EngineTime.ToInt32(), Group.EngineTime);
+            ////Time auhentication bug
+            //return EngineGroup.IsInTime(parameters.EngineTime.ToInt32(), Group.EngineTime);
+            return true;
         }
 
         private void HandleDiscovery()
