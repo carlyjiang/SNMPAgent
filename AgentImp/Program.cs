@@ -3,26 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+
 using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Pipeline;
-using System.Windows.Forms;
+using Lextm.SharpSnmpLib.Objects;
+using Lextm.SharpSnmpLib.Security;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.Configuration;
 
 namespace Carl.Agent
 {
     class Program
     {
+        internal static IUnityContainer Container { get; private set; }
+        [STAThread]
         static void Main(string[] args)
         {
-            //ObjectStore store = new ObjectStore();
-            //store.Add(new SampleObject("TestObject", "1.2.3"));
+            //Console.WriteLine("Hello, World!");
+            //Console.ReadKey();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainForm());
 
-            //new XmlParser().test();
 
-
+            Container = new UnityContainer();
+            Container.LoadConfiguration("agent");
         }
     }
-
-
 }
 
 
