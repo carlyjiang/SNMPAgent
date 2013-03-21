@@ -2,10 +2,10 @@
 using Lextm.SharpSnmpLib;
 using System;
 
-public sealed class Integer32Object : ScalarObject
+public sealed class IntegerObject : ScalarObject
 {
     private Integer32 _data;
-    public Integer32Object(Int32 data, string id)
+    public IntegerObject(Int32 data, string id)
         : base(id)
     {
         _data = new Integer32(data);

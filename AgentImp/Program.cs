@@ -9,8 +9,8 @@ using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Pipeline;
 using Lextm.SharpSnmpLib.Objects;
 using Lextm.SharpSnmpLib.Security;
-using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
+using Microsoft.Practices.Unity;
 
 namespace Carl.Agent
 {
@@ -20,17 +20,12 @@ namespace Carl.Agent
         [STAThread]
         static void Main(string[] args)
         {
-            //Console.WriteLine("Hello, World!");
-            //Console.ReadKey();
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
-
-
             Container = new UnityContainer();
             Container.LoadConfiguration("agent");
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainForm());             
         }
     }
 }
-
-
