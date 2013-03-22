@@ -22,7 +22,7 @@ namespace Carl.Agent
         [STAThread]
         static void Main(string[] args)
         {
-            
+            new ObjectRegistry().test();
             Console.ReadKey();
         }
     }

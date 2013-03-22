@@ -11,7 +11,7 @@ namespace Carl.Agent
 {
     class ObjectRegistry
     {
-        private XDocument _doc;
+        private static XDocument _doc;
         private readonly string _filename = "ObjectConfig.xml";
 
         public string DefaultFileName
@@ -50,14 +50,15 @@ namespace Carl.Agent
                 new XElement("description", obj.Description)
             );
             
-            FieldInfo fi = obj.GetType().GetField("GetDataHandler", BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic);
-            Delegate d = fi.GetValue(obj) as Delegate;
+            FieldInfo fieldinfo = obj.GetType().GetField("GetDataHandler", 
+                BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic);
+            Delegate d = fieldinfo.GetValue(obj) as Delegate;
             if (d != null)
             {
                 Delegate[] delegatelist = d.GetInvocationList();
-                foreach (var iter in delegatelist)
+                foreach (var v in delegatelist)
                 {
-                    element.Add(new XElement("delegate", iter.Method.Name));
+                    element.Add(new XElement("delegate", v.Method.Name));
                 }
             }
             
@@ -70,11 +71,7 @@ namespace Carl.Agent
             {
                 throw new ArgumentNullException("XML file not load");
             }
-
-            var obj = from o in _doc.Descendants("object")
-                      where o.Attribute("name").Value == name
-                      select o;
-
+            var obj = _doc.Descendants("object").Where(o => o.Attribute("name").Value == name);
             obj.Remove<XElement>();
         }
 
@@ -86,21 +83,21 @@ namespace Carl.Agent
             }
             List<ObjectBase> list = new List<ObjectBase>();
             var docObjects = _doc.Descendants("object");
-            foreach (var obiter in docObjects)
+            foreach (var v in docObjects)
             {
                 object[] objects = new object[2];
-                objects[0] = obiter.Attribute("id").Value;
-                objects[1] = obiter.Attribute("name").Value;
-                ObjectBase ob = (ObjectBase)Activator.CreateInstance(Type.GetType(obiter.Attribute("type").Value), objects);
+                objects[0] = v.Attribute("id").Value;
+                objects[1] = v.Attribute("name").Value;
+                ObjectBase ob = (ObjectBase)Activator.CreateInstance(Type.GetType(v.Attribute("type").Value), objects);
 
-                ob.Description = obiter.Element("description").Value;
+                ob.Description = v.Element("description").Value;
 
-                if (obiter.Element("delegate") != null && obiter.Element("delegate").Value != String.Empty)
+                if (v.Element("delegate") != null && v.Element("delegate").Value != String.Empty)
                 {
                     EventInfo eventinfo = ob.GetType().GetEvent("GetDataHandler");
                     Delegate registeredMethod = Delegate.CreateDelegate(eventinfo.EventHandlerType,
                         DataGetMethodFactory.GetDataGetMethodFactory(),
-                        DataGetMethodFactory.GetDataGetMethodFactory().GetType().GetMethod(obiter.Element("delegate").Value)
+                        DataGetMethodFactory.GetDataGetMethodFactory().GetType().GetMethod(v.Element("delegate").Value)
                         );
                     eventinfo.AddEventHandler(ob, registeredMethod);
                 }
@@ -120,13 +117,14 @@ namespace Carl.Agent
 
             //or.AddNewObject(o1);
             //or.Save(DefaultFileName);
-
+            //or.DeleteObject("integer");
             List<ObjectBase> ll = or.GetAllObject();
             foreach (var ob in ll)
             {
                 Console.WriteLine("Object id {0}, name {1}, type {2}, description {3}", ob.GetId, ob.Name, ob.GetType(), ob.Description);
                 try
                 {
+                    Console.WriteLine(ob.GetType());
                     Console.WriteLine(ob.Data);
                 }
                 catch

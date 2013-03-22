@@ -103,8 +103,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Objects\ObjectSerialize.cs" />
-    <Compile Include="ObjectBase.cs" />
+    <Compile Include="Objects\ObjectBase.cs" />
     <Compile Include="XmlParser.cs" />
     <Compile Include="Objects\ObjectRegistry.cs" />
     <Compile Include="Objects\IntegerObject.cs" />
