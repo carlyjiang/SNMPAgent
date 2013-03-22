@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Reflection;
 
 using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Pipeline;
@@ -11,6 +12,7 @@ using Lextm.SharpSnmpLib.Objects;
 using Lextm.SharpSnmpLib.Security;
 using Microsoft.Practices.Unity.Configuration;
 using Microsoft.Practices.Unity;
+using System.ComponentModel;
 
 namespace Carl.Agent
 {
@@ -20,12 +22,8 @@ namespace Carl.Agent
         [STAThread]
         static void Main(string[] args)
         {
-            Container = new UnityContainer();
-            Container.LoadConfiguration("agent");
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());             
+            
+            Console.ReadKey();
         }
     }
 }

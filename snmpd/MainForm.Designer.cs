@@ -60,9 +60,9 @@ namespace Lextm.SharpSnmpLib.Agent
             // 
             // btnTrap
             // 
-            this.btnTrap.Location = new System.Drawing.Point(26, 106);
+            this.btnTrap.Location = new System.Drawing.Point(26, 98);
             this.btnTrap.Name = "btnTrap";
-            this.btnTrap.Size = new System.Drawing.Size(93, 23);
+            this.btnTrap.Size = new System.Drawing.Size(93, 21);
             this.btnTrap.TabIndex = 2;
             this.btnTrap.Text = "Send Trap v1";
             this.btnTrap.UseVisualStyleBackColor = true;
@@ -70,9 +70,9 @@ namespace Lextm.SharpSnmpLib.Agent
             // 
             // btnTrap2
             // 
-            this.btnTrap2.Location = new System.Drawing.Point(125, 106);
+            this.btnTrap2.Location = new System.Drawing.Point(125, 98);
             this.btnTrap2.Name = "btnTrap2";
-            this.btnTrap2.Size = new System.Drawing.Size(93, 23);
+            this.btnTrap2.Size = new System.Drawing.Size(93, 21);
             this.btnTrap2.TabIndex = 3;
             this.btnTrap2.Text = "Send Trap v2";
             this.btnTrap2.UseVisualStyleBackColor = true;
@@ -80,41 +80,41 @@ namespace Lextm.SharpSnmpLib.Agent
             // 
             // txtIP
             // 
-            this.txtIP.Location = new System.Drawing.Point(84, 32);
+            this.txtIP.Location = new System.Drawing.Point(84, 30);
             this.txtIP.Name = "txtIP";
-            this.txtIP.Size = new System.Drawing.Size(100, 20);
+            this.txtIP.Size = new System.Drawing.Size(100, 21);
             this.txtIP.TabIndex = 4;
             this.txtIP.Text = "127.0.0.1";
             // 
             // txtPort
             // 
-            this.txtPort.Location = new System.Drawing.Point(84, 58);
+            this.txtPort.Location = new System.Drawing.Point(84, 54);
             this.txtPort.Name = "txtPort";
-            this.txtPort.Size = new System.Drawing.Size(49, 20);
+            this.txtPort.Size = new System.Drawing.Size(49, 21);
             this.txtPort.TabIndex = 5;
             this.txtPort.Text = "162";
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(12, 35);
+            this.label1.Location = new System.Drawing.Point(12, 32);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(66, 23);
+            this.label1.Size = new System.Drawing.Size(66, 21);
             this.label1.TabIndex = 6;
             this.label1.Text = "Manager IP";
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(40, 61);
+            this.label2.Location = new System.Drawing.Point(40, 56);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 23);
+            this.label2.Size = new System.Drawing.Size(38, 21);
             this.label2.TabIndex = 7;
             this.label2.Text = "Port";
             // 
             // btnInformV2
             // 
-            this.btnInformV2.Location = new System.Drawing.Point(224, 106);
+            this.btnInformV2.Location = new System.Drawing.Point(224, 98);
             this.btnInformV2.Name = "btnInformV2";
-            this.btnInformV2.Size = new System.Drawing.Size(93, 23);
+            this.btnInformV2.Size = new System.Drawing.Size(93, 21);
             this.btnInformV2.TabIndex = 8;
             this.btnInformV2.Text = "Send Inform v2";
             this.btnInformV2.UseVisualStyleBackColor = true;
@@ -140,7 +140,7 @@ namespace Lextm.SharpSnmpLib.Agent
             this.alNotification.SetAction(this.toolStripButton1, this.actEnabled);
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(77, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(91, 22);
             this.toolStripButton1.Text = "Start listening";
             // 
             // toolStripSeparator1
@@ -151,7 +151,7 @@ namespace Lextm.SharpSnmpLib.Agent
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(17, 22);
+            this.toolStripLabel1.Size = new System.Drawing.Size(19, 22);
             this.toolStripLabel1.Text = "IP";
             // 
             // tscbIP
@@ -163,7 +163,7 @@ namespace Lextm.SharpSnmpLib.Agent
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(27, 22);
+            this.toolStripLabel2.Size = new System.Drawing.Size(32, 22);
             this.toolStripLabel2.Text = "Port";
             // 
             // tstxtPort
@@ -185,9 +185,9 @@ namespace Lextm.SharpSnmpLib.Agent
             // 
             // btnInformV3
             // 
-            this.btnInformV3.Location = new System.Drawing.Point(224, 134);
+            this.btnInformV3.Location = new System.Drawing.Point(224, 124);
             this.btnInformV3.Name = "btnInformV3";
-            this.btnInformV3.Size = new System.Drawing.Size(93, 23);
+            this.btnInformV3.Size = new System.Drawing.Size(93, 21);
             this.btnInformV3.TabIndex = 10;
             this.btnInformV3.Text = "Send Inform v3";
             this.btnInformV3.UseVisualStyleBackColor = true;
@@ -195,9 +195,9 @@ namespace Lextm.SharpSnmpLib.Agent
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(353, 169);
+            this.ClientSize = new System.Drawing.Size(353, 156);
             this.Controls.Add(this.btnInformV3);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.btnInformV2);

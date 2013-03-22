@@ -1,24 +1,26 @@
-﻿using Lextm.SharpSnmpLib.Pipeline;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Lextm.SharpSnmpLib;
-using System;
-
+using Lextm.SharpSnmpLib.Pipeline;
 
 namespace Carl.Agent
 {
-    public sealed class IntegerObject : ObjectBase
+    public sealed class StringObject : ObjectBase
     {
-        private Integer32 _data;
+        private OctetString _data;
         public override event GetDataFrom GetDataHandler;
 
-        public IntegerObject(string id, string name, Int32 data)
+        public StringObject(string id, string name, string data)
             : base(id)
         {
-            _data = new Integer32(data);
+            _data = new OctetString(data);
             _name = name;
         }
 
-        public IntegerObject(string id, string name):
-            base(id)
+        public StringObject(string id, string name)
+            : base(id)
         {
             _name = name;
         }
@@ -30,7 +32,7 @@ namespace Carl.Agent
                 if (GetDataHandler != null)
                 {
                     ISnmpData data = GetDataHandler();
-                    if (data.TypeCode != SnmpType.Integer32)
+                    if (data.TypeCode != SnmpType.OctetString)
                     {
                         throw new ArgumentException("Wrong Type");
                     }
@@ -49,15 +51,13 @@ namespace Carl.Agent
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException("Value");
                 }
-
-                if (value.TypeCode != SnmpType.Integer32)
+                if (value.TypeCode != SnmpType.OctetString)
                 {
                     throw new ArgumentException("Wrong Type");
                 }
-
-                _data = (Integer32)value;
+                _data = (OctetString)value;
             }
         }
     }
