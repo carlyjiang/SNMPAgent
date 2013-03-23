@@ -63,17 +63,17 @@ namespace Carl.Agent
             string authenticationPassphrase, 
             string privacyPassphrase)
         {
-
             if (authenticationMethod == AuthenticationMethod.DefaultAuthenticationProvider
                 && privacyMethod != PrivacyMethod.DefaultPrivacyProvider)
             {
-                throw new ArgumentException("Wrong Parameter: AuthenticationMethod and PrivacyMethod are not matched");
+                throw new ArgumentException("Wrong Parameter: Privacy Method must be Default when Authentication Method is Default");
             }
 
             if (authenticationPassphrase.Length < 8)
             {
                 throw new ArgumentException("authenticationPassphrase length is too short");
             }
+
             if (privacyPassphrase.Length < 8)
             {
                 throw new ArgumentException("privacyPassphrase length is too short");

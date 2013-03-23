@@ -56,6 +56,8 @@ namespace Lextm.SharpSnmpLib.Agent
             users.Add(new OctetString("privacy"), new DESPrivacyProvider(new OctetString("privacyphrase"),
                                                                          new MD5AuthenticationProvider(new OctetString("authentication"))));
             
+            
+
             ToolStripManager.Renderer = new Office2007Renderer.Office2007Renderer();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Text;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -243,15 +244,24 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public string ToString(IObjectRegistry objects)
         {
+            StringBuilder strBuilder = new StringBuilder();
+            var variables = Variables;
+            foreach (var v in variables)
+            {
+                int count = 0;
+                strBuilder.Append(Environment.NewLine + "Variable " + ++count + ": ");
+                strBuilder.Append(v.Id.ToString() + " " + v.Data);
+            }
             return string.Format(
                 CultureInfo.InvariantCulture,
-                "SNMPv1 TRAP PDU: agent address: {0}; time stamp: {1}; enterprise: {2}; generic: {3}; specific: {4}; varbind count: {5}",
+                "SNMPv1 TRAP PDU: agent address: {0}; time stamp: {1}; enterprise: {2}; generic: {3}; specific: {4}; varbind count: {5}; variables values: {6}",
                 AgentAddress,
                 TimeStamp,
                 Enterprise.ToString(objects),
                 Generic,
                 Specific.ToString(CultureInfo.InvariantCulture),
-                Variables.Count.ToString(CultureInfo.InvariantCulture));
+                Variables.Count.ToString(CultureInfo.InvariantCulture),
+                strBuilder.ToString());
         }
     }
 }

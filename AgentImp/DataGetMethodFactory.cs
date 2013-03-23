@@ -10,6 +10,21 @@ namespace Carl.Agent
     {
         private static object _lock = new object();
         private static DataGetMethodFactory _instance;
+        public static DataGetMethodFactory Instance 
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    return DataGetMethodFactory.GetDataGetMethodFactory();
+                }
+                return _instance;
+            }
+            private set
+            {
+            }
+        }
+
         private DataGetMethodFactory()
         {
         }
@@ -19,9 +34,11 @@ namespace Carl.Agent
             if (_instance == null)
             {
                 lock (_lock)
-                if (_instance == null)
                 {
-                    _instance = new DataGetMethodFactory();
+                    if (_instance == null)
+                    {
+                        _instance = new DataGetMethodFactory();
+                    }
                 }
             }
             return _instance;

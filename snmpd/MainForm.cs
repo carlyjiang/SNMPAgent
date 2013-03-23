@@ -106,21 +106,42 @@ namespace Lextm.SharpSnmpLib.Agent
 
         private void BtnTrapClick(object sender, EventArgs e)
         {
+            List<Variable> list = new List<Variable>();
+            Lextm.SharpSnmpLib.Objects.SysDescr sysdesc = new Objects.SysDescr();
+            list.Add(new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"), sysdesc.Data));
+
             IPAddress ip = IPAddress.Parse(txtIP.Text);
             Messenger.SendTrapV1(
                 new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture)),
                 IPAddress.Loopback, // here should be IP of the current machine.
                 new OctetString("public"),
-                new ObjectIdentifier(new uint[] { 1, 3, 6 }),
-                GenericCode.ColdStart,
+                new ObjectIdentifier("1.3.6"),
+                GenericCode.EnterpriseSpecific,
                 0,
                 0,
-                new List<Variable>());
+                list);
+                
+
+            //IPAddress ip = IPAddress.Parse(txtIP.Text);
+            //Messenger.SendTrapV1(
+            //    new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture)),
+            //    IPAddress.Loopback, // here should be IP of the current machine.
+            //    new OctetString("public"),
+            //    new ObjectIdentifier(new uint[] { 1, 3, 6 }),
+            //    GenericCode.ColdStart,
+            //    0,
+            //    0,
+            //    list);
+            ////new List<Variable>());
         }
 
         private void BtnTrap2Click(object sender, EventArgs e)
         {
             IPAddress ip = IPAddress.Parse(txtIP.Text);
+
+            List<Variable> list = new List<Variable>();
+            Lextm.SharpSnmpLib.Objects.SysDescr sysdesc = new Objects.SysDescr();
+            list.Add(new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"), sysdesc.Data));
             Messenger.SendTrapV2(
                 0,
                 VersionCode.V2,
@@ -128,7 +149,16 @@ namespace Lextm.SharpSnmpLib.Agent
                 new OctetString("public"),
                 new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                 0,
-                new List<Variable>());
+                list);
+
+            //Messenger.SendTrapV2(
+            //    0,
+            //    VersionCode.V2,
+            //    new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture)),
+            //    new OctetString("public"),
+            //    new ObjectIdentifier(new uint[] { 1, 3, 6 }),
+            //    0,
+            //    new List<Variable>());
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
@@ -136,6 +166,10 @@ namespace Lextm.SharpSnmpLib.Agent
         private void BtnInformV2Click(object sender, EventArgs e)
         {
             IPAddress ip = IPAddress.Parse(txtIP.Text);
+            List<Variable> list = new List<Variable>();
+            Lextm.SharpSnmpLib.Objects.SysDescr sysdesc = new Objects.SysDescr();
+            list.Add(new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"), sysdesc.Data));
+
             try
             {
                 Messenger.SendInform(
@@ -145,7 +179,7 @@ namespace Lextm.SharpSnmpLib.Agent
                     new OctetString("public"),
                     new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                     0,
-                    new List<Variable>(), 
+                    list, 
                     2000,
                     null,
                     null);
@@ -160,6 +194,11 @@ namespace Lextm.SharpSnmpLib.Agent
         private void BtnInformV3Click(object sender, EventArgs e)
         {
             IPAddress ip = IPAddress.Parse(txtIP.Text);
+
+            List<Variable> list = new List<Variable>();
+            Lextm.SharpSnmpLib.Objects.SysDescr sysdesc = new Objects.SysDescr();
+            list.Add(new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"), sysdesc.Data));
+
             try
             {
                 IPEndPoint receiver = new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture));
@@ -173,7 +212,7 @@ namespace Lextm.SharpSnmpLib.Agent
                     new OctetString("neither"),
                     new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                     0,
-                    new List<Variable>(),
+                    list,
                     2000, 
                     DefaultPrivacyProvider.DefaultPair,
                     report);

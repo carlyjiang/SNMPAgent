@@ -6,6 +6,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Reflection;
 using Lextm.SharpSnmpLib.Pipeline;
+using Lextm.SharpSnmpLib;
 
 namespace Carl.Agent
 {
@@ -27,7 +28,7 @@ namespace Carl.Agent
             _doc = XDocument.Load(filename);
         }
 
-        private void Save(string filename)
+        public void Save(string filename)
         {
             if (_doc == null)
             {
@@ -59,6 +60,7 @@ namespace Carl.Agent
                 foreach (var v in delegatelist)
                 {
                     element.Add(new XElement("delegate", v.Method.Name));
+                    element.Add(new XElement("delegateObject", v.Method.ReflectedType));
                 }
             }
             
@@ -95,10 +97,38 @@ namespace Carl.Agent
                 if (v.Element("delegate") != null && v.Element("delegate").Value != String.Empty)
                 {
                     EventInfo eventinfo = ob.GetType().GetEvent("GetDataHandler");
-                    Delegate registeredMethod = Delegate.CreateDelegate(eventinfo.EventHandlerType,
-                        DataGetMethodFactory.GetDataGetMethodFactory(),
-                        DataGetMethodFactory.GetDataGetMethodFactory().GetType().GetMethod(v.Element("delegate").Value)
-                        );
+                    Delegate registeredMethod;
+
+                    if (v.Element("delegateObject") != null 
+                        && v.Element("delegateObject").Value != String.Empty
+                        && v.Element("delegateObject").Value != "Carl.Agent.DataGetMethodFactory")
+                    {
+                        object objectCaller = (object)Activator.CreateInstance(Type.GetType(v.Element("delegateObject").Value));
+                        
+                        if (objectCaller.GetType().GetMethod(v.Element("delegate").Value).IsStatic)
+                        {
+                            registeredMethod = Delegate.CreateDelegate(
+                                eventinfo.EventHandlerType,
+                                objectCaller.GetType().GetMethod(v.Element("delegate").Value)
+                            );
+                        }
+                        else
+                        {
+                            registeredMethod = Delegate.CreateDelegate(
+                                eventinfo.EventHandlerType,
+                                objectCaller,
+                                objectCaller.GetType().GetMethod(v.Element("delegate").Value)
+                            );
+                        }
+                    }
+                    else
+                    {
+                        registeredMethod = Delegate.CreateDelegate(eventinfo.EventHandlerType,
+                            DataGetMethodFactory.Instance,
+                            DataGetMethodFactory.Instance.GetType().GetMethod(v.Element("delegate").Value)
+                            );
+                    }
+
                     eventinfo.AddEventHandler(ob, registeredMethod);
                 }
                 list.Add(ob);

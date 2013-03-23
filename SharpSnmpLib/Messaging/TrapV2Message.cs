@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Lextm.SharpSnmpLib.Security;
+using System.Text;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -259,13 +260,22 @@ namespace Lextm.SharpSnmpLib.Messaging
         [CLSCompliant(false)]
         public string ToString(IObjectRegistry objects)
         {
+            StringBuilder strBuilder = new StringBuilder();
+            var variables = this.Variables();
+            foreach (var v in variables)
+            {
+                int count = 0;
+                strBuilder.Append(Environment.NewLine + "Variable " + ++count + ": ");
+                strBuilder.Append(v.Id.ToString() + " " + v.Data);
+            }
             return string.Format(
                 CultureInfo.InvariantCulture,
-                "SNMPv2 trap: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}",
+                "SNMPv2 trap: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}, var value: {4}",
                 TimeStamp.ToString(CultureInfo.InvariantCulture),
                 this.Community(),
                 Enterprise.ToString(objects),
-                this.Variables().Count.ToString(CultureInfo.InvariantCulture));
+                this.Variables().Count.ToString(CultureInfo.InvariantCulture),
+                strBuilder.ToString());
         }
     }
 }

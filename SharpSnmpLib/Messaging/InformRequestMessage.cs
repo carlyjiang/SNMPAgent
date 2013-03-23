@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Lextm.SharpSnmpLib.Security;
+using System.Text;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -278,16 +279,46 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns>
         /// A <see cref="System.String"/> that represents this instance.
         /// </returns>
+        /// 
         [CLSCompliant(false)]
         public string ToString(IObjectRegistry objects)
         {
+
+            if (objects == null)
+            {
+                return ToString();
+            }
+
+            StringBuilder strBuilder = new StringBuilder();
+            var variables = this.Variables();
+            foreach (var v in variables)
+            {
+                int count = 0;
+                strBuilder.Append(Environment.NewLine + "Variable " + ++count + ": ");
+                strBuilder.Append(v.Id.ToString() + " " + v.Data);
+            }
+             
             return string.Format(
                 CultureInfo.InvariantCulture,
-                "INFORM request message: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}",
+                "INFORM request message: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}, var values: {4}",
                 TimeStamp.ToString(CultureInfo.InvariantCulture),
                 this.Community(),
                 Enterprise.ToString(objects),
-                this.Variables().Count.ToString(CultureInfo.InvariantCulture));
+                this.Variables().Count.ToString(CultureInfo.InvariantCulture),
+                strBuilder.ToString()
+                );
         }
+        //public string ToString(IObjectRegistry objects)
+        //{
+        //    return string.Format(
+        //        CultureInfo.InvariantCulture,
+        //        "INFORM request message: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}",
+        //        TimeStamp.ToString(CultureInfo.InvariantCulture),
+        //        this.Community(),
+        //        Enterprise.ToString(objects),
+        //        this.Variables().Count.ToString(CultureInfo.InvariantCulture)
+        //        foreachthis.Variables()
+        //        );
+        //}
     }
 }

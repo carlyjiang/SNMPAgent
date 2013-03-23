@@ -21,9 +21,6 @@ namespace Carl.Agent
         [STAThread]
         static void Main(string[] args)
         {
-            //new ObjectRegistry().test();
-            //Console.ReadKey();
-
             Container = new UnityContainer();
             Container.LoadConfiguration("agent");
 
@@ -50,18 +47,64 @@ namespace Carl.Agent
             users.Add(new OctetString("privacy"), new DESPrivacyProvider(new OctetString("privacyphrase"),
                                                                          new MD5AuthenticationProvider(new OctetString("authentication"))));
 
+            //TrapAgent.SetIP("192.168.1.1");
+            TrapAgent.sendTrapV2(new List<Variable>());
 
-            ObjectRegistry or = new ObjectRegistry();
-            or.Load(or.DefaultFileName);
-            var allObjects = or.GetAllObject();
+            //ObjectRegistry or = new ObjectRegistry();
+            //or.Load(or.DefaultFileName);
+            //var allObjects = or.GetAllObject();
 
-            foreach (var v in allObjects)
-            {
-                store.Add(v);
-            }
+            //foreach (var v in allObjects)
+            //{
+            //    try
+            //    {
+            //        Console.WriteLine(v.Data);
+            //    }
+            //    catch { }
+            //    store.Add(v);
+            //}
 
-            Application.EnableVisualStyles();
-            Application.Run(new MainForm());
+            //Application.EnableVisualStyles();
+            //Application.Run(new MainForm());
+            //Program.DemoOfObjectRegistry();
+            Console.ReadKey();
+        }
+
+        public static void DemoOfObjectRegistry()
+        {
+            StringObject intobject = new StringObject("1.2.3.4.5.6.7.8.9.10", "StringObject");
+            //intobject.GetDataHandler += DataGetMethodFactory.GetDataGetMethodFactory().GetMethodInteger32;
+            //intobject.GetDataHandler += () => { return new Integer32(54321); };
+
+            GetDataHandler handler = new GetDataHandler();
+
+            intobject.GetDataHandler += handler.GetStringData;
+            ObjectRegistry oRegistry = new ObjectRegistry();
+            oRegistry.Load(oRegistry.DefaultFileName);
+            oRegistry.AddNewObject(intobject);
+            
+            //var variablies = oRegistry.GetAllObject();
+
+            //foreach (var v in variablies)
+            //{
+            //    Console.WriteLine(v.Data);
+            //}
+
+            oRegistry.Save(oRegistry.DefaultFileName);
+        }
+
+        public static Integer32 GetData()
+        {
+            return new Integer32(654321);
+
+        }
+    }
+
+    class GetDataHandler
+    {
+        public OctetString GetStringData()
+        {
+            return new OctetString("abcde");
         }
     }
 }
