@@ -49,6 +49,7 @@ namespace Lextm.SharpSnmpLib.Agent
             store.Add(new SysORLastChange());
             store.Add(new SysORTable());
             
+            
             var users = Container.Resolve<UserRegistry>();
             users.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);
             users.Add(new OctetString("authen"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("authentication"))));

@@ -104,6 +104,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Objects\ObjectBase.cs" />
+    <Compile Include="UserRegistry.cs" />
     <Compile Include="XmlParser.cs" />
     <Compile Include="Objects\ObjectRegistry.cs" />
     <Compile Include="Objects\IntegerObject.cs" />

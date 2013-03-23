@@ -22,7 +22,7 @@ namespace Carl.Agent
             }
         }
 
-        private void Load(string filename)
+        public void Load(string filename)
         {
             _doc = XDocument.Load(filename);
         }
