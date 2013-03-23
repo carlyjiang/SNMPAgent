@@ -142,10 +142,12 @@ namespace Lextm.SharpSnmpLib.Agent
             List<Variable> list = new List<Variable>();
             Lextm.SharpSnmpLib.Objects.SysDescr sysdesc = new Objects.SysDescr();
             list.Add(new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"), sysdesc.Data));
+            IPEndPoint endpoint = new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture));
+
             Messenger.SendTrapV2(
                 0,
                 VersionCode.V2,
-                new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture)),
+                endpoint,
                 new OctetString("public"),
                 new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                 0,

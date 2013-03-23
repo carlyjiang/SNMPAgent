@@ -94,11 +94,12 @@ namespace Carl.Agent
             return Dns.GetHostEntry(String.Empty).AddressList.Where(o => !o.IsIPv6LinkLocal).FirstOrDefault();
         }
 
-        public static void SendTrapV1(GenericCode genericCode, IList<Variable> list)
+        public static void SendTrapV1(GenericCode genericCode, string community, IList<Variable> list)
         {
-            Messenger.SendTrapV1(new IPEndPoint(IP, Port),
+            Messenger.SendTrapV1(
+                new IPEndPoint(IP, Port),
                 GetLocalIP(),
-                new OctetString("public"),
+                new OctetString(community),
                 new ObjectIdentifier("1.3.6"),
                 genericCode,
                 0,
@@ -106,15 +107,13 @@ namespace Carl.Agent
                 list);
         }
 
-        public static void SendTrapV2(IList<Variable> list)
+        public static void SendTrapV2(IList<Variable> list, string community)
         {
-            Console.WriteLine("IP: {0}, Port: {1}", IP, Port);
-
             Messenger.SendTrapV2(
                 0,
                 VersionCode.V2,
                 new IPEndPoint(IP, Port),
-                new OctetString("public"),
+                new OctetString(community),
                 new ObjectIdentifier("1.3.6"),
                 0,
                 list);
@@ -153,6 +152,7 @@ namespace Carl.Agent
                    timeout,
                    privacy,
                    report);
+                Console.WriteLine("Done");
             }
             else
             {

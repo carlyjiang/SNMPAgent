@@ -48,7 +48,12 @@ namespace Carl.Agent
                                                                          new MD5AuthenticationProvider(new OctetString("authentication"))));
 
             //TrapAgent.SetIP("192.168.1.1");
-            TrapAgent.sendTrapV2(new List<Variable>());
+            while (true)
+            {
+                TrapAgent.SendTrapV2(new List<Variable>(), "public");
+                System.Threading.Thread.Sleep(500);
+            }
+            //TrapAgent.SendInform(VersionCode.V3, "neither", new List<Variable>(), users);
 
             //ObjectRegistry or = new ObjectRegistry();
             //or.Load(or.DefaultFileName);
