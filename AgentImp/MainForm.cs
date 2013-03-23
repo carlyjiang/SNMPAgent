@@ -64,7 +64,6 @@ namespace Carl.Agent
                 return true;
             }
 
-            
             IPAddress address = IPAddress.Parse(_listenAddress);
             if (address.AddressFamily == AddressFamily.InterNetwork)
             {

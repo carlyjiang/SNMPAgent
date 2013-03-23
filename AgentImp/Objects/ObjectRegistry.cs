@@ -117,7 +117,7 @@ namespace Carl.Agent
 
             //or.AddNewObject(o1);
             //or.Save(DefaultFileName);
-            //or.DeleteObject("integer");
+            or.DeleteObject("integer");
             List<ObjectBase> ll = or.GetAllObject();
             foreach (var ob in ll)
             {

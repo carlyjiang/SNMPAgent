@@ -12,7 +12,6 @@ using Lextm.SharpSnmpLib.Objects;
 using Lextm.SharpSnmpLib.Security;
 using Microsoft.Practices.Unity.Configuration;
 using Microsoft.Practices.Unity;
-using System.ComponentModel;
 
 namespace Carl.Agent
 {
