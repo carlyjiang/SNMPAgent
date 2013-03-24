@@ -137,6 +137,19 @@ namespace Lextm.SharpSnmpLib.Agent
 
         private void BtnTrap2Click(object sender, EventArgs e)
         {
+            //IPAddress ip = IPAddress.Parse("127.0.0.1");
+
+            //IPEndPoint endpoint = new IPEndPoint(ip, 62);
+
+            //Messenger.SendTrapV2(
+            //    0,
+            //    VersionCode.V2,
+            //    endpoint,
+            //    new OctetString("public"),
+            //    new ObjectIdentifier(new uint[] { 1, 3, 6 }),
+            //    0,
+            //    new List<Variable>());
+
             IPAddress ip = IPAddress.Parse(txtIP.Text);
 
             List<Variable> list = new List<Variable>();

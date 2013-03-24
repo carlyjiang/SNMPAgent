@@ -15,6 +15,9 @@ using Microsoft.Practices.Unity;
 
 namespace Carl.Agent
 {
+    /// <summary>
+    /// Test for all functionality
+    /// </summary>
     class Program
     {
         internal static IUnityContainer Container { get; private set; }
@@ -47,31 +50,38 @@ namespace Carl.Agent
             users.Add(new OctetString("privacy"), new DESPrivacyProvider(new OctetString("privacyphrase"),
                                                                          new MD5AuthenticationProvider(new OctetString("authentication"))));
 
-            //TrapAgent.SetIP("192.168.1.1");
-            while (true)
-            {
-                TrapAgent.SendTrapV2(new List<Variable>(), "public");
-                System.Threading.Thread.Sleep(500);
-            }
+            
             //TrapAgent.SendInform(VersionCode.V3, "neither", new List<Variable>(), users);
 
-            //ObjectRegistry or = new ObjectRegistry();
-            //or.Load(or.DefaultFileName);
-            //var allObjects = or.GetAllObject();
+            ObjectRegistry or = new ObjectRegistry();
+            or.Load(or.DefaultFileName);
+            var allObjects = or.GetAllObject();
 
-            //foreach (var v in allObjects)
-            //{
-            //    try
-            //    {
-            //        Console.WriteLine(v.Data);
-            //    }
-            //    catch { }
-            //    store.Add(v);
-            //}
+            foreach (var v in allObjects)
+            {
+                try
+                {
+                    Console.WriteLine(v.Data);
+                }
+                catch { }
+                store.Add(v);
+            }
 
+
+            List<Variable> list = new List<Variable>();
+            Variable sendVariable = new Variable(or.GetObjectByName("IntegerObject2").GetId, or.GetObjectByName("IntegerObject2").Data);
+            list.Add(sendVariable);
+            
             //Application.EnableVisualStyles();
             //Application.Run(new MainForm());
             //Program.DemoOfObjectRegistry();
+            while (true)
+            {
+                TrapAgent.SendTrapV2(list, "public");
+                //TrapAgent.SendTrapV1(GenericCode.EnterpriseSpecific, "public", new List<Variable>());
+                //    TrapAgent.SendInform(VersionCode.V2, "public", new List<Variable>(), users);
+                System.Threading.Thread.Sleep(500);
+            }
             Console.ReadKey();
         }
 

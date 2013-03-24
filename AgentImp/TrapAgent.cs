@@ -86,7 +86,7 @@ namespace Carl.Agent
         static TrapAgent()
         {
             IP = IPAddress.Parse("127.0.0.1");
-            Port = 62;
+            Port = 162;
         }
 
         public static IPAddress GetLocalIP()
@@ -124,13 +124,16 @@ namespace Carl.Agent
             if (version == VersionCode.V3)
             {
                 IPrivacyProvider privacy = user.Find(new OctetString(community));
-                if(privacy == null)
+                if (privacy == null)
                 {
                     throw new Exception("User not found");
                 }
                 SendInform(version, community, list, 2000, privacy);
             }
-            SendInform(version, community, list, 2000, null);
+            else
+            {
+                SendInform(version, community, list, 2000, null);
+            }
         }
 
         public static void SendInform(VersionCode version, string community, IList<Variable> list, int timeout, IPrivacyProvider privacy)
@@ -152,7 +155,6 @@ namespace Carl.Agent
                    timeout,
                    privacy,
                    report);
-                Console.WriteLine("Done");
             }
             else
             {

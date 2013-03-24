@@ -13,6 +13,21 @@ namespace Carl.Agent
     class ObjectRegistry
     {
         private static XDocument _doc;
+        private static List<ObjectBase> _list = new List<ObjectBase>();
+
+        internal List<ObjectBase> Objects
+        {
+            get
+            {
+                if(_list.Count == 0)
+                {
+                    GetAllObject();
+                }
+                return _list;
+            }
+        }
+
+
         private readonly string _filename = "ObjectConfig.xml";
 
         public string DefaultFileName
@@ -42,6 +57,11 @@ namespace Carl.Agent
             if (_doc.Descendants("object").Attributes("id").Where(o => o.Value == obj.GetId.ToString()).FirstOrDefault() != null)
             {
                 throw new ArgumentException("id of the new object gets duplicate");
+            }
+
+            if (_doc.Descendants("object").Attributes("name").Where(o => o.Value == obj.Name).FirstOrDefault() != null)
+            {
+                throw new ArgumentException("name of the new object gets duplicate");
             }
 
             XElement element = new XElement("object",
@@ -83,7 +103,7 @@ namespace Carl.Agent
             {
                 throw new ArgumentNullException("XML file Not Load");
             }
-            List<ObjectBase> list = new List<ObjectBase>();
+            
             var docObjects = _doc.Descendants("object");
             foreach (var v in docObjects)
             {
@@ -131,9 +151,32 @@ namespace Carl.Agent
 
                     eventinfo.AddEventHandler(ob, registeredMethod);
                 }
-                list.Add(ob);
+                _list.Add(ob);
             }
-            return list;
+            return _list;
+        }
+
+        public ObjectIdentifier GetIdByName(string name)
+        {
+            if (_doc == null)
+            {
+                throw new ArgumentNullException("XML file not load");
+            }
+            var id = _doc.Descendants("object").Where(o => o.Attribute("name").Value == name).FirstOrDefault().Attribute("id").Value;
+
+            return new ObjectIdentifier(id);
+        }
+
+        public ObjectBase GetObjectByName(string name)
+        {
+            foreach (var v in _list)
+            {
+                if(v.Name == name)
+                {
+                    return v;
+                }
+            }
+            return null;
         }
 
         public void test()
