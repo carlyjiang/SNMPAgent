@@ -1,4 +1,3 @@
-SNMP Agent Implementation based on SharpSNMP (http://sharpsnmplib.codeplex.com)
+### SNMP Agent
 
-This program based on sharpSNMP, and it implements a snmp agent. Client could write a XML configuration 
-describing what kind of Mib is, and agent program will automatically call and get the data from the source.
+Based on sharpSNMP. Use Mib to define snmp protocals. The agent fetch data from source and serve as repeater to communicate with clients.
